@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\SocialAuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,13 +26,10 @@ Route::options('{any}', function() {
 })->where('any', '.*');
 
 
-// Nhóm các route liên quan đến authentication
-//login
 $prefixLogin = '/v1/auth';
-
+// Nhóm các route authentication với prefix /v1/auth
 Route::group(['prefix' => $prefixLogin], function () {
-    Route::post( '/login', [AuthController::class, 'login']);
-    Route::post( '/register', [AuthController::class, 'register']);
-    Route::post('/password', [AuthController::class, 'loginWithPassword']);
+    Route::post('/login', [SocialAuthController::class, 'login']);
+    Route::post('/password', [LoginController::class, 'login']);
+    Route::post('/register', [RegisterController::class, 'register']);
 });
-
